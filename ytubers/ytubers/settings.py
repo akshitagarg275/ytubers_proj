@@ -43,6 +43,12 @@ INSTALLED_APPS = [
     'youtubers.apps.YoutubersConfig',
     'accounts.apps.AccountsConfig',
     'ckeditor',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'hiretubers.apps.HiretubersConfig'
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SITE_ID = 1
 ROOT_URLCONF = 'ytubers.urls'
 
 TEMPLATES = [
@@ -107,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGIN_REDIRECT_URL = "dashboard" 
 
 
 # Internationalization

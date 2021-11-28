@@ -26,11 +26,22 @@ def register(request):
                     messages.success(request,"Account created successfully")
                     return redirect('login')
         else:
-            messages.error(request,"Passwords do not match")
+            messages.warning(request,"Passwords do not match")
             return redirect('register')
     return render(request,'accounts/register.html')
 
 def login(request):
+    if request.method == 'POST':
+        username=request.POST['username']
+        password=request.POST['password']
+        user=auth.authenticate(username=username,password=password)
+        if user is not None:
+            auth.login(request,user)
+            messages.success(request,"Logged in successfully")
+            return redirect('dashboard')
+        else:
+            messages.warning(request,"Invalid credentials")
+            return redirect('login')
     return render(request,'accounts/login.html')
 
 def logout_user(request):

@@ -56,40 +56,55 @@
 
     <section class="youtuber-form container mt-5 mb-5">
       <div class="row">
-        <form class="col-md-8 offset-md-2">
+        <form class="col-md-8 offset-md-2" method = "POST" action="{% url 'hiretuber' %}">
+          {% csrf_token %}
+          {% if user.is_authenticated %}
+          <input type="hidden" name="user_id" value="{{user.id}}">
+          {% else %}
+          <input type="hidden" name="user_id" value="00">
+          {% endif %}
+          <input type="hidden" name="ytuber_id" value="{{ytuber.id}}">
           <h3 class="pt-2 pb-2">Fill the Form and reach out</h3>
 
           <div class="form-row">
-            <div class="form-group col-md-4">
-              <input type="email" class="form-control" placeholder="First Name">
+            <div class="form-group col-md-4" >
+            
+              <input type="input" class="form-control" placeholder="First Name" name="first_name" required>
             </div>
             <div class="form-group col-md-4">
-              <input type="password" class="form-control" placeholder="Last Name">
+              <input type="input" class="form-control" placeholder="Last Name" name="last_name" required>
             </div>
             <div class="form-group col-md-4">
-              <input type="email" class="form-control" placeholder="Email">
+              {% if user.is_authenticated %}
+              <input type="email" class="form-control" placeholder="Email" name="email" value="{{user.email}}" required>
+              {% else %}
+              <input type="email" class="form-control" placeholder="Email" name="email" required>
+              {% endif %}
             </div>
           </div>
 
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Interested In...">
+            <select name="tuber_name" id="inputState" class="form-control">
+              <option selected disabled hidden>Select tuber</option>
+              <option value="{{ytuber.name}}">{{ytuber.name}}</option>
+            </select>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="City">
+              <input type="text" class="form-control" placeholder="City" name="city">
             </div>
             <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="State">
+              <input type="text" class="form-control" placeholder="State" name="state">
             </div>
             <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="Phone Number">
+              <input type="text" class="form-control" placeholder="Phone Number" name="phone">
             </div>
 
           </div>
 
           <div class="form-group pt-2">
-            <textarea class="form-control" rows="3" placeholder="Details Message"></textarea>
+            <textarea name="message" class="form-control" rows="3" placeholder="Details Message"></textarea>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-accent">Contact Us</button>
